@@ -173,7 +173,7 @@ This section completes the API Endpoints part of your `README.md` with the appro
 
 ## Testing
 
-To ensure that the Rule Engine functions correctly, a series of test cases have been written using Mocha and Chai. These tests cover the creation, combination, and evaluation of rules.
+To ensure that the Rule Engine functions correctly, a series of test cases have been written using Mocha . These tests cover the creation, combination, and evaluation of rules.
 
 ### Running Tests
 
