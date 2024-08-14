@@ -41,5 +41,53 @@ This project is a Rule Engine that allows dynamic creation, combination, and eva
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/rule-engine-with-ast.git
-   cd rule-engine-with-ast
+   git clone https://github.com/Harshit-65/Rule-Engine-with-AST.git
+   cd Rule-Engine-with-AST
+
+2. Install the dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables:
+
+Create a .env file in the root directory and add the following:
+```bash
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/rule-engine?retryWrites=true&w=majority
+PORT=3000
+```
+Replace <username> and <password> with your MongoDB credentials.
+
+4. Start the server:
+
+```bash
+npm start
+```
+The server will start on http://localhost:3000.
+
+
+## Usage
+
+***Accessing the Application***
+Open a browser and navigate to http://localhost:3000.
+You will see a UI with options to create, combine, and evaluate rules.
+
+***Creating a Rule***
+Click on Create Rule.
+Enter a rule name and the rule string (e.g., (age > 30 AND department = 'Sales') OR (salary > 50000)).
+Submit to create the rule.
+
+***Combining Rules***
+Click on Combine Rules.
+Select existing rules from the dropdown or enter the rule names.
+Choose a logical operator (e.g., AND, OR).
+Submit to combine the rules.
+
+***Evaluating a Rule***
+Click on Evaluate Rule.
+Select a rule to evaluate.
+Enter the JSON data (e.g., { "age": 35, "department": "Sales", "salary": 60000 }).
+Submit to see the evaluation result.
+
+
