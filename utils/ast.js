@@ -108,4 +108,4 @@ function evaluate(node, data) {
   return false;
 }
 
-module.exports = { parseRuleString, combineNodes, evaluate, printTree };
+module.exports = { parseRuleString, combineNodes, evaluate };
