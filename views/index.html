@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rule Engine</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        padding: 20px;
+        text-align: center;
+      }
+      .json-scrollable {
+        max-height: 300px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        text-align: left;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Rule Engine</h1>
+
+    <!-- Buttons -->
+    <button
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#createRuleModal"
+    >
+      Create Rule
+    </button>
+    <button
+      class="btn btn-secondary"
+      data-toggle="modal"
+      data-target="#combineRulesModal"
+    >
+      Combine Rules
+    </button>
+    <button
+      class="btn btn-success"
+      data-toggle="modal"
+      data-target="#evaluateRuleModal"
+    >
+      Evaluate Rule
+    </button>
+
+    <!-- Create Rule Modal -->
+    <div class="modal fade" id="createRuleModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create Rule</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              id="createRuleName"
+              class="form-control"
+              placeholder="Rule Name"
+            />
+            <textarea
+              id="createRuleString"
+              class="form-control mt-2"
+              placeholder="Rule String"
+            ></textarea>
+            <button class="btn btn-primary mt-3" onclick="createRule()">
+              Create
+            </button>
+          </div>
+          <div class="modal-footer">
+            <div id="createRuleResult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combine Rules Modal -->
+    <div class="modal fade" id="combineRulesModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Combine Rules</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              id="combineRule1"
+              class="form-control"
+              placeholder="Rule Name 1"
+            />
+            <input
+              type="text"
+              id="combineRule2"
+              class="form-control mt-2"
+              placeholder="Rule Name 2"
+            />
+            <select id="combineOperator" class="form-control mt-2">
+              <option value="AND">AND</option>
+              <option value="OR">OR</option>
+            </select>
+            <button class="btn btn-secondary mt-3" onclick="combineRules()">
+              Combine
+            </button>
+            <div id="combinedRuleName" class="mt-3"></div>
+            <div id="combineRuleResult" class="json-scrollable mt-3"></div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluate Rule Modal -->
+    <div class="modal fade" id="evaluateRuleModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Evaluate Rule</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              id="evaluateRuleName"
+              class="form-control"
+              placeholder="Rule Name"
+            />
+            <textarea
+              id="evaluateRuleData"
+              class="form-control mt-2"
+              placeholder="JSON Data"
+            ></textarea>
+            <button class="btn btn-success mt-3" onclick="evaluateRule()">
+              Evaluate
+            </button>
+          </div>
+          <div class="modal-footer">
+            <div id="evaluateRuleResult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function createRule() {
+        const ruleName = document.getElementById("createRuleName").value;
+        const ruleString = document.getElementById("createRuleString").value;
+
+        fetch("/api/rules/create_rule", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ruleName, ruleString }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("createRuleResult").innerText =
+              data.message || data.error;
+          })
+          .catch((error) => {
+            document.getElementById("createRuleResult").innerText =
+              "Error creating rule";
+          });
+
+        // Clear input fields
+        document.getElementById("createRuleName").value = "";
+        document.getElementById("createRuleString").value = "";
+      }
+
+      function combineRules() {
+        const rule1Name = document.getElementById("combineRule1").value;
+        const rule2Name = document.getElementById("combineRule2").value;
+        const op = document.getElementById("combineOperator").value;
+
+        fetch("/api/rules/combine_rules", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ rules: [rule1Name, rule2Name], op }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              document.getElementById("combinedRuleName").innerText =
+                "Error: " + data.error;
+              document.getElementById("combineRuleResult").innerText = "";
+            } else {
+              // document.getElementById("combinedRuleName").innerText =
+              //   "Combined Rule Name: " + data.ruleName;
+              // console.log(data.ruleName);
+              document.getElementById("combineRuleResult").innerText =
+                JSON.stringify(data.ruleAST, null, 2);
+            }
+          })
+          .catch((error) => {
+            document.getElementById("combinedRuleName").innerText =
+              "Error combining rules";
+            document.getElementById("combineRuleResult").innerText =
+              error.message;
+          });
+
+        // Clear input fields
+        document.getElementById("combineRule1").value = "";
+        document.getElementById("combineRule2").value = "";
+      }
+
+      function evaluateRule() {
+        const ruleName = document.getElementById("evaluateRuleName").value;
+        const data = JSON.parse(
+          document.getElementById("evaluateRuleData").value
+        );
+
+        fetch("/api/rules/evaluate_rule", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ruleName, data }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("evaluateRuleResult").innerText =
+              "Evaluation Result: " + (data.result ? "True" : "False");
+          })
+          .catch((error) => {
+            document.getElementById("evaluateRuleResult").innerText =
+              "Error evaluating rule";
+          });
+
+        // Clear input fields
+        document.getElementById("evaluateRuleName").value = "";
+        document.getElementById("evaluateRuleData").value = "";
+      }
+    </script>
+  </body>
+</html>
