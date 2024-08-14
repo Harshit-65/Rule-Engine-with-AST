@@ -25,7 +25,7 @@ This project is a Rule Engine that allows dynamic creation, combination, and eva
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB (Mongoose for ORM)
 - **Frontend:** HTML, CSS, JavaScript, Bootstrap
-- **Testing:** Mocha, Chai
+- **Testing:** Mocha
 - **Deployment:** Express server, MongoDB Atlas
 
 ## Installation
