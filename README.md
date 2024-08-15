@@ -25,7 +25,7 @@ This project is a Rule Engine that allows dynamic creation, combination, and eva
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB (Mongoose for ORM)
 - **Frontend:** HTML, CSS, JavaScript, Bootstrap
-- **Testing:** Mocha, Chai
+- **Testing:** Mocha
 - **Deployment:** Express server, MongoDB Atlas
 
 ## Installation
@@ -90,4 +90,117 @@ The server will start on http://localhost:3000.
 - Enter the JSON data (e.g., { "age": 35, "department": "Sales", "salary": 60000 }).
 - Submit to see the evaluation result.
 
+## API Endpoints
 
+### Create Rule
+
+- **Endpoint:** `/api/create_rule`
+- **Method:** `POST`
+- **Description:** Creates a new rule with the provided rule string and stores its AST representation.
+- **Request Body:**
+
+  ```json
+  {
+    "ruleName": "rule1",
+    "ruleString": "(age > 30 AND department = 'Sales') OR (salary > 50000)"
+  }
+  ```
+**Response:**
+    
+```json
+    {
+  "rule": {
+    "_id": "60d0fe4f5311236168a109ca",
+    "ruleName": "rule1",
+    "ruleAST": { /* AST Representation */ }
+  }
+}
+```
+
+### Combine Rules
+
+**Endpoint:** `/api/combine_rules`
+
+**Method:** `POST`
+
+**Description:** Combines two or more rules using a specified logical operator.
+
+**Request Body:**
+
+```json
+{
+  "rules": ["rule1", "rule2"],
+  "op": "AND"
+}
+```
+**Response:**
+    
+```json
+{
+  "ruleAST": { /* Combined AST Representation */ }
+}
+```
+
+### Evaluate Rule
+
+**Endpoint:** `/api/evaluate_rule`
+
+**Method:** `POST`
+
+**Description:** Evaluates a rule against provided JSON data.
+
+**Request Body:**
+
+```json
+{
+  "ruleName": "rule1",
+  "data": { "age": 35, "department": "Sales", "salary": 60000 }
+}
+
+```
+**Response:**
+    
+```json
+{
+    "result": true
+}
+
+```
+
+
+This section completes the API Endpoints part of your `README.md` with the appropriate formatting.
+
+## Testing
+
+To ensure that the Rule Engine functions correctly, a series of test cases have been written using Mocha . These tests cover the creation, combination, and evaluation of rules.
+
+### Running Tests
+
+1. **Ensure the server is not running** or use a separate test database.
+
+2. Run the tests using Mocha:
+
+   ```bash
+   npm test
+   ```
+
+## Project Structure
+Here's an overview of the project's structure:
+
+```bash
+   .
+├── models
+│   └── Rule.js        # Mongoose model for Rule
+├── controllers
+│   |── controller.js             # rules controller
+├── routes
+│   └── Route.js       # Express routes for API endpoints
+├── tests
+│   └── ruleEngine.test.js        # Mocha test cases
+├── views
+│   └── index.html     # Main HTML view
+├── server.js          # Main server file
+├── README.md          # Project README file
+├── package.json       # NPM package file
+└── .env               # Environment variables file
+```
