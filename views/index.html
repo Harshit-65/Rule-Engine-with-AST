@@ -202,9 +202,9 @@
                 "Error: " + data.error;
               document.getElementById("combineRuleResult").innerText = "";
             } else {
-              // document.getElementById("combinedRuleName").innerText =
-              //   "Combined Rule Name: " + data.ruleName;
               // console.log(data.ruleName);
+              document.getElementById("combinedRuleName").innerText =
+                "Combined Rule Name: " + data.ruleName;
               document.getElementById("combineRuleResult").innerText =
                 JSON.stringify(data.ruleAST, null, 2);
             }

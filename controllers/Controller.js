@@ -55,7 +55,12 @@ exports.combineRules = async (req, res) => {
 
     await combinedRule.save();
 
-    res.status(201).json({ ruleAST: combinedAST });
+    res
+      .status(201)
+      .json({
+        ruleName: `${rule1Name}_${rule2Name}_${op}`,
+        ruleAST: combinedAST,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "An error occurred while combining rules" });
