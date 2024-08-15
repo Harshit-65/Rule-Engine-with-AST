@@ -162,8 +162,7 @@ The server will start on http://localhost:3000.
     
 ```json
 {
-  "ruleName": "rule1",
-  "data": { "age": 35, "department": "Sales", "salary": 60000 }
+    "result": true
 }
 
 ```
