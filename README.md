@@ -133,10 +133,13 @@ The server will start on http://localhost:3000.
   "op": "AND"
 }
 ```
+### Name of the combined file: {rule1}_{rule2}_op  e.g rule1_rule2_AND
+
 **Response:**
     
 ```json
 {
+   "ruleName": "rule1_rule2_AND",
   "ruleAST": { /* Combined AST Representation */ }
 }
 ```
