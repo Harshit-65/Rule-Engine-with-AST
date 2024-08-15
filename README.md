@@ -94,7 +94,7 @@ The server will start on http://localhost:3000.
 
 ### Create Rule
 
-- **Endpoint:** `/api/rules/create_rule`
+- **Endpoint:** `/api/create_rule`
 - **Method:** `POST`
 - **Description:** Creates a new rule with the provided rule string and stores its AST representation.
 - **Request Body:**
@@ -119,7 +119,7 @@ The server will start on http://localhost:3000.
 
 ### Combine Rules
 
-**Endpoint:** `/api/rules/combine_rules`
+**Endpoint:** `/api/combine_rules`
 
 **Method:** `POST`
 
@@ -143,7 +143,7 @@ The server will start on http://localhost:3000.
 
 ### Evaluate Rule
 
-**Endpoint:** `/api/rules/evaluate_rule`
+**Endpoint:** `/api/evaluate_rule`
 
 **Method:** `POST`
 
