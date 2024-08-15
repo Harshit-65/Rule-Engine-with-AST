@@ -1,5 +1,5 @@
 const Rule = require("../models/Rule");
-const { parseRuleString, combineNodes, evaluate } = require("../utils/ast");
+const { tokenizeRuleString, mergeRules, evaluate } = require("../utils/ast");
 const astUtils = require("../utils/ast");
 
 exports.createRule = async (req, res) => {
@@ -17,7 +17,7 @@ exports.createRule = async (req, res) => {
       return res.status(400).json({ error: "Rule name already exists" });
     }
 
-    const rootNode = parseRuleString(ruleString);
+    const rootNode = tokenizeRuleString(ruleString);
     const rule = new Rule({ ruleName, ruleAST: rootNode });
     await rule.save();
     res.status(201).json({ message: "Rule created successfully", rule });
@@ -46,7 +46,7 @@ exports.combineRules = async (req, res) => {
     const rule1AST = rule1.ruleAST;
     const rule2AST = rule2.ruleAST;
 
-    const combinedAST = astUtils.combineNodes([rule1AST, rule2AST], op);
+    const combinedAST = astUtils.mergeRules([rule1AST, rule2AST], op);
 
     const combinedRule = new Rule({
       ruleName: `${rule1Name}_${rule2Name}_${op}`,

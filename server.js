@@ -25,14 +25,14 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB", err);
   });
-// Serve static files from the public directory
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Route for serving the index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./views/index.html"));
 });
-app.use("/api/rules", Route);
+app.use("/api", Route);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

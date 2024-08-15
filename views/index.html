@@ -161,7 +161,7 @@
         const ruleName = document.getElementById("createRuleName").value;
         const ruleString = document.getElementById("createRuleString").value;
 
-        fetch("/api/rules/create_rule", {
+        fetch("/api/create_rule", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -188,7 +188,7 @@
         const rule2Name = document.getElementById("combineRule2").value;
         const op = document.getElementById("combineOperator").value;
 
-        fetch("/api/rules/combine_rules", {
+        fetch("/api/combine_rules", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -227,7 +227,7 @@
           document.getElementById("evaluateRuleData").value
         );
 
-        fetch("/api/rules/evaluate_rule", {
+        fetch("/api/evaluate_rule", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

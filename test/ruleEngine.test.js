@@ -58,11 +58,7 @@ describe("Rule Engine API", function () {
           "((age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing')) AND (salary > 50000 OR experience > 5)",
       };
 
-      const response = await sendRequest(
-        "/api/rules/create_rule",
-        "POST",
-        ruleData
-      );
+      const response = await sendRequest("/api/create_rule", "POST", ruleData);
 
       assert.strictEqual(response.statusCode, 201);
       assert.ok(response.body.rule);
@@ -76,13 +72,9 @@ describe("Rule Engine API", function () {
           "((age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing')) AND (salary > 50000 OR experience > 5)",
       };
 
-      await sendRequest("/api/rules/create_rule", "POST", ruleData);
+      await sendRequest("/api/create_rule", "POST", ruleData);
 
-      const response = await sendRequest(
-        "/api/rules/create_rule",
-        "POST",
-        ruleData
-      );
+      const response = await sendRequest("/api/create_rule", "POST", ruleData);
 
       assert.strictEqual(response.statusCode, 400);
       assert.strictEqual(response.body.error, "Rule name already exists");
@@ -119,7 +111,7 @@ describe("Rule Engine API", function () {
       };
 
       const response = await sendRequest(
-        "/api/rules/combine_rules",
+        "/api/combine_rules",
         "POST",
         combineData
       );
@@ -135,7 +127,7 @@ describe("Rule Engine API", function () {
       };
 
       const response = await sendRequest(
-        "/api/rules/combine_rules",
+        "/api/combine_rules",
         "POST",
         combineData
       );
@@ -165,7 +157,7 @@ describe("Rule Engine API", function () {
       };
 
       const response = await sendRequest(
-        "/api/rules/evaluate_rule",
+        "/api/evaluate_rule",
         "POST",
         evaluationData
       );
@@ -198,7 +190,7 @@ describe("Rule Engine API", function () {
       };
 
       const response = await sendRequest(
-        "/api/rules/evaluate_rule",
+        "/api/evaluate_rule",
         "POST",
         evaluationData
       );
@@ -214,7 +206,7 @@ describe("Rule Engine API", function () {
       };
 
       const response = await sendRequest(
-        "/api/rules/evaluate_rule",
+        "/api/evaluate_rule",
         "POST",
         evaluationData
       );

@@ -1,8 +1,9 @@
-function parseRuleString(ruleString) {
+function tokenizeRuleString(ruleString) {
   const tokens = ruleString.match(/(\(|\)|AND|OR|<=|>=|!=|<|>|=|[^()\s]+)/g);
   const stack = [];
   const operators = [];
 
+  //
   function popOp() {
     const operator = operators.pop();
     const right = stack.pop();
@@ -53,7 +54,7 @@ function parseRuleString(ruleString) {
   return stack[0];
 }
 
-function combineNodes(rules, op) {
+function mergeRules(rules, op) {
   if (rules.length === 1) return rules[0];
 
   let combined = rules[0];
@@ -108,4 +109,4 @@ function evaluate(node, data) {
   return false;
 }
 
-module.exports = { parseRuleString, combineNodes, evaluate };
+module.exports = { tokenizeRuleString, mergeRules, evaluate };
