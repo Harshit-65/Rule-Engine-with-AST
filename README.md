@@ -2,7 +2,12 @@
 
 This project is a Rule Engine that allows dynamic creation, combination, and evaluation of rules based on user attributes such as age, department, income, and experience. The rules are represented using Abstract Syntax Trees (ASTs), enabling flexible and powerful rule-based logic.
 
+## UPDATE
+
+- Added Bonus Feature to update existing rules - Click on the cleck box "update existing Feature in create Rule" and write the name of the existing Rule in database and pass the new Rule
+
 ## Video Explanation
+
 https://drive.google.com/file/d/1Tys9t2FLO6IBqc8wnIE-vYtXe7zlx7Dm/view?usp=sharing
 
 ## Table of Contents
@@ -47,6 +52,8 @@ https://drive.google.com/file/d/1Tys9t2FLO6IBqc8wnIE-vYtXe7zlx7Dm/view?usp=shari
    git clone https://github.com/Harshit-65/Rule-Engine-with-AST.git
    cd Rule-Engine-with-AST
 
+   ```
+
 2. Install the dependencies:
 
 ```bash
@@ -56,10 +63,12 @@ npm install
 3. Set up environment variables:
 
 Create a .env file in the root directory and add the following:
+
 ```bash
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/rule-engine?retryWrites=true&w=majority
 PORT=3000
 ```
+
 Replace <username> and <password> with your MongoDB credentials.
 
 4. Start the server:
@@ -67,27 +76,31 @@ Replace <username> and <password> with your MongoDB credentials.
 ```bash
 npm start
 ```
-The server will start on http://localhost:3000.
 
+The server will start on http://localhost:3000.
 
 ## Usage
 
-***Accessing the Application***
+**_Accessing the Application_**
+
 - Open a browser and navigate to http://localhost:3000.
 - You will see a UI with options to create, combine, and evaluate rules.
 
-***Creating a Rule***
+**_Creating a Rule_**
+
 - Click on Create Rule.
 - Enter a rule name and the rule string (e.g., (age > 30 AND department = 'Sales') OR (salary > 50000)).
 - Submit to create the rule.
 
-***Combining Rules***
+**_Combining Rules_**
+
 - Click on Combine Rules.
 - Select existing rules from the dropdown or enter the rule names.
 - Choose a logical operator (e.g., AND, OR).
 - Submit to combine the rules.
 
-***Evaluating a Rule***
+**_Evaluating a Rule_**
+
 - Click on Evaluate Rule.
 - Select a rule to evaluate.
 - Enter the JSON data (e.g., { "age": 35, "department": "Sales", "salary": 60000 }).
@@ -108,14 +121,17 @@ The server will start on http://localhost:3000.
     "ruleString": "(age > 30 AND department = 'Sales') OR (salary > 50000)"
   }
   ```
-**Response:**
-    
+
+  **Response:**
+
 ```json
-    {
+{
   "rule": {
     "_id": "60d0fe4f5311236168a109ca",
     "ruleName": "rule1",
-    "ruleAST": { /* AST Representation */ }
+    "ruleAST": {
+      /* AST Representation */
+    }
   }
 }
 ```
@@ -136,14 +152,17 @@ The server will start on http://localhost:3000.
   "op": "AND"
 }
 ```
-### Name of the combined file: {rule1}_{rule2}_op  e.g rule1_rule2_AND
+
+### Name of the combined file: {rule1}\_{rule2}\_op e.g rule1_rule2_AND
 
 **Response:**
-    
+
 ```json
 {
-   "ruleName": "rule1_rule2_AND",
-  "ruleAST": { /* Combined AST Representation */ }
+  "ruleName": "rule1_rule2_AND",
+  "ruleAST": {
+    /* Combined AST Representation */
+  }
 }
 ```
 
@@ -162,17 +181,15 @@ The server will start on http://localhost:3000.
   "ruleName": "rule1",
   "data": { "age": 35, "department": "Sales", "salary": 60000 }
 }
-
 ```
+
 **Response:**
-    
+
 ```json
 {
-    "result": true
+  "result": true
 }
-
 ```
-
 
 This section completes the API Endpoints part of your `README.md` with the appropriate formatting.
 
@@ -191,6 +208,7 @@ To ensure that the Rule Engine functions correctly, a series of test cases have 
    ```
 
 ## Project Structure
+
 Here's an overview of the project's structure:
 
 ```bash
