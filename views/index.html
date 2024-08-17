@@ -71,9 +71,12 @@
               class="form-control mt-2"
               placeholder="Rule String"
             ></textarea>
+          </button>
+          <input type="checkbox" id="updateRule" class="mt-3" /> Update
+          Existing Rule <br>
             <button class="btn btn-primary mt-3" onclick="createRule()">
               Create
-            </button>
+            
           </div>
           <div class="modal-footer">
             <div id="createRuleResult"></div>
@@ -160,13 +163,14 @@
       function createRule() {
         const ruleName = document.getElementById("createRuleName").value;
         const ruleString = document.getElementById("createRuleString").value;
+        const update = document.getElementById("updateRule").checked;
 
         fetch("/api/create_rule", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ruleName, ruleString }),
+          body: JSON.stringify({ ruleName, ruleString, update }),
         })
           .then((response) => response.json())
           .then((data) => {
