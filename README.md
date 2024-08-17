@@ -5,6 +5,8 @@ This project is a Rule Engine that allows dynamic creation, combination, and eva
 ## UPDATE
 
 - Added Bonus Feature to update existing rules - Click on the cleck box "update existing Rule checkbox" in create Rule and write the name of the existing Rule in database and pass the new Rule
+- Implement error handling for invalid rule strings or data formats (e.g., missing operators,
+  invalid comparisons).
 
 ## Video Explanation
 
