@@ -11,7 +11,7 @@ exports.createRule = async (req, res) => {
         .json({ error: "ruleName and ruleString are required" });
     }
 
-    const ruleAST = tokenizeRuleString(ruleString);
+    const ruleAST = tokenizeRuleString(ruleString); // This will throw an error if the rule string is invalid
 
     let rule;
     if (update) {
@@ -82,10 +82,10 @@ exports.combineRules = async (req, res) => {
       ruleAST: combinedAST,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "An error occurred while combining rules" });
+    res.status(500).json({ error: error.message });
   }
 };
+
 exports.evaluateRule = async (req, res) => {
   try {
     const { ruleName, data } = req.body;
