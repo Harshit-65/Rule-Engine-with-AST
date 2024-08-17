@@ -1,13 +1,21 @@
 function tokenizeRuleString(ruleString) {
   const tokens = ruleString.match(/(\(|\)|AND|OR|<=|>=|!=|<|>|=|[^()\s]+)/g);
+
+  if (!tokens) {
+    throw new Error("Invalid rule string format");
+  }
+
   const stack = [];
   const operators = [];
 
-  //
   function popOp() {
     const operator = operators.pop();
     const right = stack.pop();
     const left = stack.pop();
+
+    if (!left || !right) {
+      throw new Error("Invalid rule string: missing operands");
+    }
 
     stack.push({ type: "operator", operator, left, right });
   }
@@ -43,12 +51,26 @@ function tokenizeRuleString(ruleString) {
       }
       i--;
 
+      if (!key || !operator || value === null) {
+        throw new Error("Invalid rule string: missing key, operator, or value");
+      }
+
+      // Check for invalid operators
+      const validOperators = [">", "<", ">=", "<=", "==", "!=", "="];
+      if (!validOperators.includes(operator)) {
+        throw new Error(`Invalid operator: '${operator}'`);
+      }
+
       stack.push({ type: "operand", key, operator, value });
     }
   }
 
   while (operators.length) {
     popOp();
+  }
+
+  if (stack.length !== 1) {
+    throw new Error("Invalid rule string: unbalanced expression");
   }
 
   return stack[0];
@@ -103,7 +125,7 @@ function evaluate(node, data) {
       case "=":
         return data[key] == value;
       default:
-        return false;
+        throw new Error(`Invalid operator: '${operator}'`);
     }
   }
   return false;
